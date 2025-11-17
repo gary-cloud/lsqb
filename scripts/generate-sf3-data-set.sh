@@ -148,6 +148,10 @@ else
 fi
 ./load.sh "${DATAGEN_DATA_DIR}" --no-header
 ./transform.sh
+echo "Removing dangling references after transformation"
+for i in {1..5}; do
+  cat sql/snb-clean-invalid-refs.sql | ./duckdb ldbc.duckdb
+done
 
 echo "Exporting projected/merged FK CSVs via DuckDB"
 cat export/snb-export-only-ids-projected-fk.sql | ./duckdb ldbc.duckdb
