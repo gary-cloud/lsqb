@@ -2,6 +2,7 @@ import kuzu
 from os import listdir
 from os.path import isfile, join
 import logging
+import os
 import shutil
 import sys
 
@@ -52,7 +53,10 @@ def main():
         sf = sys.argv[1]
 
     database_file_location = 'kuzu/scratch/lsqb-database'
-    shutil.rmtree(database_file_location, ignore_errors=True)
+    if os.path.isdir(database_file_location):
+        shutil.rmtree(database_file_location, ignore_errors=True)
+    elif os.path.exists(database_file_location):
+        os.remove(database_file_location)
 
     db = kuzu.Database('kuzu/scratch/lsqb-database')
 
